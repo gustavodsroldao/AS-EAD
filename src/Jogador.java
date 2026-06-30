@@ -4,7 +4,7 @@
  * Cada jogador possui um personagem com habilidade passiva:
  *   ESPECULADOR — recebe +20% de salário; paga +10% de imposto
  *   NEGOCIANTE  — paga 10% menos de aluguel
- *   ADVOGADO    — isento de fiança ao sair da prisão
+ *   ADVOGADO    — isento de fiança uma única vez por jogo ao sair da prisão
  *   CONSTRUTOR  — imóveis comprados por ele têm aluguel base +15%
  *
  * 'naPrisao' e 'turnosPrisao' controlam o estado de detenção.

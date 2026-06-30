@@ -117,8 +117,8 @@ public class Jogo {
     }
 
     private void construirTabuleiro() {
-        // PRISAO = just visiting / destination for prisoners
-        // IR_PRISAO = landing here sends player to jail
+        // PRISAO: casa de visita / destino dos jogadores enviados para a prisao
+        // IR_PRISAO: cair nesta casa envia o jogador diretamente para a prisao
         String[] especiais = {
                 "SORTE_REVES", "IMPOSTO", "SORTE_REVES",
                 "RESTITUICAO", "LEILAO", "PRISAO",

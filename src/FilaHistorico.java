@@ -1,10 +1,10 @@
 /**
  * FilaHistorico — fila circular (FIFO) de registros de rodada.
  *
- * Implementada com array circular de capacidade fixa (50 entradas).
- * Quando a fila atinge a capacidade máxima, a entrada mais antiga é
+ * Implementada com array circular de capacidade configuravel.
+ * Quando a fila atinge a capacidade maxima, a entrada mais antiga e
  * descartada automaticamente ao enfileirar uma nova — comportamento
- * de buffer circular, garantindo que o histórico sempre contenha as
+ * de buffer circular, garantindo que o historico sempre contenha as
  * N rodadas mais recentes sem crescer indefinidamente.
  *
  * Campos 'head' e 'tail' determinam início e fim lógicos na alocação

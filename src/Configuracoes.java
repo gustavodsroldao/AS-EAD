@@ -1,8 +1,7 @@
 /**
  * Configuracoes — parâmetros globais da partida.
  *
- * Valores padrão equilibrados para partidas de 3–6 jogadores
- * com 12 imóveis temáticos (Espaço e Ficção Científica).
+ * Valores padrao para uma partida padrao.
  */
 public class Configuracoes {
     public double saldoInicial = 15000.0; // capital inicial de cada jogador
