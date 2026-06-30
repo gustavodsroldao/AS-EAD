@@ -316,6 +316,8 @@ public class Main {
             System.out.println("  [1] Alterar saldo inicial");
             System.out.println("  [2] Alterar salario por volta");
             System.out.println("  [3] Alterar numero maximo de rodadas");
+            System.out.println("  [4] Alterar fianca da prisao");
+            System.out.println("  [5] Alterar capacidade do historico de rodadas");
             System.out.println("  [0] Voltar");
             System.out.print("Opcao: ");
             opcao = lerInt();
@@ -332,6 +334,14 @@ public class Main {
                 case 3:
                     System.out.print("Novo maximo de rodadas: ");
                     config.maxRodadas = lerInt();
+                    break;
+                case 4:
+                    System.out.print("Novo valor da fianca (R$): ");
+                    config.fianca = lerDouble();
+                    break;
+                case 5:
+                    System.out.print("Nova capacidade do historico: ");
+                    config.historicoTamanho = lerInt();
                     break;
                 case 0:
                     break;

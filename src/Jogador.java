@@ -22,6 +22,7 @@ public class Jogador {
     public boolean  ativo;
     public boolean  naPrisao;
     public int      turnosPrisao;    // contador de turnos cumpridos na prisão (máx 3)
+    public boolean  isencaoAdvogadoUsada;
 
     public Jogador(String nome, double saldo, String personagem) {
         this.nome            = nome;
@@ -33,6 +34,7 @@ public class Jogador {
         this.ativo           = true;
         this.naPrisao        = false;
         this.turnosPrisao    = 0;
+        this.isencaoAdvogadoUsada = false;
     }
 
     /** Patrimônio total = saldo em caixa + soma dos valores de compra dos imóveis. */

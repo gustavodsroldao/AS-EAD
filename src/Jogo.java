@@ -45,7 +45,7 @@ public class Jogo {
         this.rand = new Random();
         this.tabuleiro = new Tabuleiro();
         this.baralho = new Baralho(24);
-        this.historico = new FilaHistorico(50);
+        this.historico = new FilaHistorico(config.historicoTamanho);
         this.filaPrisao = new FilaPrisao(6);
     }
 
@@ -256,10 +256,10 @@ public class Jogo {
             System.out.printf("  Dados (saida obrigatoria): %d + %d = %d%n",
                     dados[0], dados[1], dados[0] + dados[1]);
         } else {
-            double custoFianca = "ADVOGADO".equals(jogador.personagem) ? 0 : config.fianca;
+            double custoFianca = ("ADVOGADO".equals(jogador.personagem) && !jogador.isencaoAdvogadoUsada) ? 0 : config.fianca;
             System.out.println("  [1] Tentar sair com dados duplos");
-            if ("ADVOGADO".equals(jogador.personagem)) {
-                System.out.println("  [2] Sair (ADVOGADO - fianca isenta)");
+            if ("ADVOGADO".equals(jogador.personagem) && !jogador.isencaoAdvogadoUsada) {
+                System.out.println("  [2] Sair (ADVOGADO - isencao de fianca disponivel)");
             } else {
                 System.out.printf("  [2] Pagar fianca: R$ %.2f%n", custoFianca);
             }
@@ -269,8 +269,9 @@ public class Jogo {
             if (op == 2) {
                 if (jogador.saldo >= custoFianca) {
                     jogador.saldo -= custoFianca;
-                    if ("ADVOGADO".equals(jogador.personagem)) {
-                        System.out.println("  [Habilidade ADVOGADO] Saiu da prisao sem pagar fianca!");
+                    if ("ADVOGADO".equals(jogador.personagem) && !jogador.isencaoAdvogadoUsada && custoFianca == 0) {
+                        jogador.isencaoAdvogadoUsada = true;
+                        System.out.println("  [Habilidade ADVOGADO] Saiu da prisao usando sua unica isencao de fianca!");
                     } else {
                         System.out.printf("  Pagou fianca: R$ %.2f. Saldo: R$ %.2f%n",
                                 custoFianca, jogador.saldo);
