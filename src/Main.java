@@ -1,13 +1,21 @@
 import java.util.Scanner;
 
+/**
+ * Main — ponto de entrada e menu principal do jogo.
+ *
+ * Responsável pelo cadastro pré-jogo de jogadores e imóveis,
+ * configuração de parâmetros da partida e inicialização do Jogo.
+ * Não contém lógica de regras — apenas entrada/saída de dados e
+ * delegação ao objeto Jogo.
+ */
 public class Main {
 
-    private static Jogador[]     jogadores    = new Jogador[6];
-    private static int           qtdJogadores = 0;
-    private static Imovel[]      imoveis      = new Imovel[40];
-    private static int           qtdImoveis   = 0;
-    private static Configuracoes config       = new Configuracoes();
-    private static Scanner       sc           = new Scanner(System.in);
+    private static Jogador[] jogadores = new Jogador[6];
+    private static int qtdJogadores = 0;
+    private static Imovel[] imoveis = new Imovel[40];
+    private static int qtdImoveis = 0;
+    private static Configuracoes config = new Configuracoes();
+    private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         int opcao;
@@ -26,14 +34,29 @@ public class Main {
             opcao = lerInt();
 
             switch (opcao) {
-                case 1: menuJogadores();         break;
-                case 2: menuImoveis();           break;
-                case 3: menuConfig();            break;
-                case 4: carregarDadosExemplo();  break;
-                case 5: exibirTabuleiroPreview(); break;
-                case 6: iniciarPartida();        break;
-                case 0: System.out.println("Encerrando. Ate logo!"); break;
-                default: System.out.println("Opcao invalida.");
+                case 1:
+                    menuJogadores();
+                    break;
+                case 2:
+                    menuImoveis();
+                    break;
+                case 3:
+                    menuConfig();
+                    break;
+                case 4:
+                    carregarDadosExemplo();
+                    break;
+                case 5:
+                    exibirTabuleiroPreview();
+                    break;
+                case 6:
+                    iniciarPartida();
+                    break;
+                case 0:
+                    System.out.println("Encerrando. Ate logo!");
+                    break;
+                default:
+                    System.out.println("Opcao invalida.");
             }
         } while (opcao != 0);
     }
@@ -53,12 +76,22 @@ public class Main {
             opcao = lerInt();
 
             switch (opcao) {
-                case 1: cadastrarJogador(); break;
-                case 2: listarJogadores();  break;
-                case 3: editarJogador();    break;
-                case 4: removerJogador();   break;
-                case 0: break;
-                default: System.out.println("Opcao invalida.");
+                case 1:
+                    cadastrarJogador();
+                    break;
+                case 2:
+                    listarJogadores();
+                    break;
+                case 3:
+                    editarJogador();
+                    break;
+                case 4:
+                    removerJogador();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opcao invalida.");
             }
         } while (opcao != 0);
     }
@@ -70,7 +103,10 @@ public class Main {
         }
         System.out.print("Nome do jogador: ");
         String nome = sc.nextLine().trim();
-        if (nome.isEmpty()) { System.out.println("Nome invalido."); return; }
+        if (nome.isEmpty()) {
+            System.out.println("Nome invalido.");
+            return;
+        }
 
         String personagem = escolherPersonagem();
         jogadores[qtdJogadores] = new Jogador(nome, 0, personagem);
@@ -87,10 +123,14 @@ public class Main {
         System.out.print("Opcao: ");
         int op = lerInt();
         switch (op) {
-            case 1: return "ESPECULADOR";
-            case 2: return "NEGOCIANTE";
-            case 3: return "ADVOGADO";
-            case 4: return "CONSTRUTOR";
+            case 1:
+                return "ESPECULADOR";
+            case 2:
+                return "NEGOCIANTE";
+            case 3:
+                return "ADVOGADO";
+            case 4:
+                return "CONSTRUTOR";
             default:
                 System.out.println("Opcao invalida. Usando NEGOCIANTE.");
                 return "NEGOCIANTE";
@@ -99,7 +139,10 @@ public class Main {
 
     private static void listarJogadores() {
         System.out.println("\n--- Jogadores cadastrados ---");
-        if (qtdJogadores == 0) { System.out.println("  Nenhum jogador."); return; }
+        if (qtdJogadores == 0) {
+            System.out.println("  Nenhum jogador.");
+            return;
+        }
         for (int i = 0; i < qtdJogadores; i++) {
             System.out.printf("  [%d] %s%n", i + 1, jogadores[i]);
         }
@@ -107,14 +150,19 @@ public class Main {
 
     private static void editarJogador() {
         listarJogadores();
-        if (qtdJogadores == 0) return;
+        if (qtdJogadores == 0)
+            return;
         System.out.print("Numero do jogador a editar: ");
         int idx = lerInt() - 1;
-        if (idx < 0 || idx >= qtdJogadores) { System.out.println("Indice invalido."); return; }
+        if (idx < 0 || idx >= qtdJogadores) {
+            System.out.println("Indice invalido.");
+            return;
+        }
 
         System.out.print("Novo nome (ENTER para manter '" + jogadores[idx].nome + "'): ");
         String nome = sc.nextLine().trim();
-        if (!nome.isEmpty()) jogadores[idx].nome = nome;
+        if (!nome.isEmpty())
+            jogadores[idx].nome = nome;
 
         System.out.print("Alterar personagem? (S/N): ");
         if ("S".equalsIgnoreCase(sc.nextLine().trim())) {
@@ -125,13 +173,18 @@ public class Main {
 
     private static void removerJogador() {
         listarJogadores();
-        if (qtdJogadores == 0) return;
+        if (qtdJogadores == 0)
+            return;
         System.out.print("Numero do jogador a remover: ");
         int idx = lerInt() - 1;
-        if (idx < 0 || idx >= qtdJogadores) { System.out.println("Indice invalido."); return; }
+        if (idx < 0 || idx >= qtdJogadores) {
+            System.out.println("Indice invalido.");
+            return;
+        }
 
         String nome = jogadores[idx].nome;
-        for (int i = idx; i < qtdJogadores - 1; i++) jogadores[i] = jogadores[i + 1];
+        for (int i = idx; i < qtdJogadores - 1; i++)
+            jogadores[i] = jogadores[i + 1];
         jogadores[qtdJogadores - 1] = null;
         qtdJogadores--;
         System.out.println("Jogador '" + nome + "' removido.");
@@ -152,22 +205,38 @@ public class Main {
             opcao = lerInt();
 
             switch (opcao) {
-                case 1: cadastrarImovel(); break;
-                case 2: listarImoveis();   break;
-                case 3: editarImovel();    break;
-                case 4: removerImovel();   break;
-                case 0: break;
-                default: System.out.println("Opcao invalida.");
+                case 1:
+                    cadastrarImovel();
+                    break;
+                case 2:
+                    listarImoveis();
+                    break;
+                case 3:
+                    editarImovel();
+                    break;
+                case 4:
+                    removerImovel();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opcao invalida.");
             }
         } while (opcao != 0);
     }
 
     private static void cadastrarImovel() {
-        if (qtdImoveis >= 40) { System.out.println("Limite de 40 imoveis atingido."); return; }
+        if (qtdImoveis >= 40) {
+            System.out.println("Limite de 40 imoveis atingido.");
+            return;
+        }
 
         System.out.print("Nome do imovel: ");
         String nome = sc.nextLine().trim();
-        if (nome.isEmpty()) { System.out.println("Nome invalido."); return; }
+        if (nome.isEmpty()) {
+            System.out.println("Nome invalido.");
+            return;
+        }
 
         System.out.print("Valor de compra (R$): ");
         double compra = lerDouble();
@@ -182,7 +251,10 @@ public class Main {
 
     private static void listarImoveis() {
         System.out.println("\n--- Imoveis cadastrados ---");
-        if (qtdImoveis == 0) { System.out.println("  Nenhum imovel."); return; }
+        if (qtdImoveis == 0) {
+            System.out.println("  Nenhum imovel.");
+            return;
+        }
         for (int i = 0; i < qtdImoveis; i++) {
             System.out.printf("  [%2d] %s%n", i + 1, imoveis[i]);
         }
@@ -190,35 +262,47 @@ public class Main {
 
     private static void editarImovel() {
         listarImoveis();
-        if (qtdImoveis == 0) return;
+        if (qtdImoveis == 0)
+            return;
         System.out.print("Numero do imovel a editar: ");
         int idx = lerInt() - 1;
-        if (idx < 0 || idx >= qtdImoveis) { System.out.println("Indice invalido."); return; }
+        if (idx < 0 || idx >= qtdImoveis) {
+            System.out.println("Indice invalido.");
+            return;
+        }
 
         System.out.print("Novo nome (ENTER para manter): ");
         String nome = sc.nextLine().trim();
-        if (!nome.isEmpty()) imoveis[idx].nome = nome;
+        if (!nome.isEmpty())
+            imoveis[idx].nome = nome;
 
         System.out.print("Novo valor de compra (0 para manter): ");
         double compra = lerDouble();
-        if (compra > 0) imoveis[idx].valorCompra = compra;
+        if (compra > 0)
+            imoveis[idx].valorCompra = compra;
 
         System.out.print("Novo aluguel base (0 para manter): ");
         double aluguel = lerDouble();
-        if (aluguel > 0) imoveis[idx].aluguelBase = aluguel;
+        if (aluguel > 0)
+            imoveis[idx].aluguelBase = aluguel;
 
         System.out.println("Imovel atualizado: " + imoveis[idx]);
     }
 
     private static void removerImovel() {
         listarImoveis();
-        if (qtdImoveis == 0) return;
+        if (qtdImoveis == 0)
+            return;
         System.out.print("Numero do imovel a remover: ");
         int idx = lerInt() - 1;
-        if (idx < 0 || idx >= qtdImoveis) { System.out.println("Indice invalido."); return; }
+        if (idx < 0 || idx >= qtdImoveis) {
+            System.out.println("Indice invalido.");
+            return;
+        }
 
         String nome = imoveis[idx].nome;
-        for (int i = idx; i < qtdImoveis - 1; i++) imoveis[i] = imoveis[i + 1];
+        for (int i = idx; i < qtdImoveis - 1; i++)
+            imoveis[i] = imoveis[i + 1];
         imoveis[qtdImoveis - 1] = null;
         qtdImoveis--;
         System.out.println("Imovel '" + nome + "' removido.");
@@ -249,8 +333,10 @@ public class Main {
                     System.out.print("Novo maximo de rodadas: ");
                     config.maxRodadas = lerInt();
                     break;
-                case 0: break;
-                default: System.out.println("Opcao invalida.");
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opcao invalida.");
             }
         } while (opcao != 0);
     }
@@ -269,19 +355,19 @@ public class Main {
         }
 
         if (qtdImoveis == 0) {
-            imoveis[0]  = new Imovel("Modulo Lunar Alfa",           200000,  10000);
-            imoveis[1]  = new Imovel("Estacao Orbital Beta",         420000,  21000);
-            imoveis[2]  = new Imovel("Colonia de Marte",             500000,  25000);
-            imoveis[3]  = new Imovel("Domo de Tita",                 350000,  17500);
-            imoveis[4]  = new Imovel("Nave-Mae Andromeda",           750000,  37500);
-            imoveis[5]  = new Imovel("Bunker Subterraneo",           230000,  11500);
-            imoveis[6]  = new Imovel("Plataforma de Europa",         600000,  30000);
-            imoveis[7]  = new Imovel("Cupula de Kepler-22b",         870000,  43500);
-            imoveis[8]  = new Imovel("Laboratorio do Asteroid Belt", 460000,  23000);
-            imoveis[9]  = new Imovel("Refugio de Plutao",            210000,  10500);
-            imoveis[10] = new Imovel("Torre de Observacao Solar",   1000000,  50000);
-            imoveis[11] = new Imovel("Base Antartica Omega",         290000,  14500);
-            qtdImoveis  = 12;
+            imoveis[0] = new Imovel("Modulo Lunar Alfa", 200000, 10000);
+            imoveis[1] = new Imovel("Estacao Orbital Beta", 420000, 21000);
+            imoveis[2] = new Imovel("Colonia de Marte", 500000, 25000);
+            imoveis[3] = new Imovel("Domo de Tita", 350000, 17500);
+            imoveis[4] = new Imovel("Nave-Mae Andromeda", 750000, 37500);
+            imoveis[5] = new Imovel("Bunker Subterraneo", 230000, 11500);
+            imoveis[6] = new Imovel("Plataforma de Europa", 600000, 30000);
+            imoveis[7] = new Imovel("Cupula de Kepler-22b", 870000, 43500);
+            imoveis[8] = new Imovel("Laboratorio do Asteroid Belt", 460000, 23000);
+            imoveis[9] = new Imovel("Refugio de Plutao", 210000, 10500);
+            imoveis[10] = new Imovel("Torre de Observacao Solar", 1000000, 50000);
+            imoveis[11] = new Imovel("Base Antartica Omega", 290000, 14500);
+            qtdImoveis = 12;
             System.out.println("  12 imoveis cadastrados (Anexo C - Espaco e Ficcao Cientifica).");
         } else {
             System.out.println("  Imoveis mantidos (ja existem " + qtdImoveis + ").");
@@ -297,9 +383,9 @@ public class Main {
         }
         Tabuleiro t = new Tabuleiro();
         String[] especiais = {
-            "SORTE_REVES", "IMPOSTO", "SORTE_REVES",
-            "RESTITUICAO", "SORTE_REVES", "IMPOSTO",
-            "RESTITUICAO", "SORTE_REVES", "IMPOSTO"
+                "SORTE_REVES", "IMPOSTO", "SORTE_REVES",
+                "RESTITUICAO", "SORTE_REVES", "IMPOSTO",
+                "RESTITUICAO", "SORTE_REVES", "IMPOSTO"
         };
         t.adicionarNoFim(new Casa("INICIO"));
         int espIdx = 0, imvIdx = 0;
