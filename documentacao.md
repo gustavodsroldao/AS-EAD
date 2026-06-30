@@ -15,7 +15,7 @@ As estruturas de dados implementadas (manual, sem auxílio da `java.util.*` para
 
 ## 2. Justificativa da estrutura escolhida para gerenciar jogadores e imóveis
 
-Optamos por utilizar **arrays estáticos prealocados** (tamanho fixo de 6 para jogadores e 40 para imóveis) gerenciados por uma variável de contador (ex: `qtdJogadores`, `qtdImoveis`). 
+Optou-se por utilizar **arrays estáticos prealocados** (tamanho fixo de 6 para jogadores e 40 para imóveis) gerenciados por uma variável de contador (ex: `qtdJogadores`, `qtdImoveis`). 
 - **Por que não lista ligada?** A quantidade máxima de jogadores e imóveis é pequena e estrita pelas regras do jogo. Arrays oferecem acesso aleatório O(1) e iteração sequencial de forma extremamente rápida, sem overhead de alocação de nós. Em ordem de turno, iterar por `jogadores[i]` é muito eficiente, e remoções são facilmente resolvidas com *shift* dos elementos subsequentes (o que é trivial para n=6 ou n=40).
 
 > **Screenshots de Gerenciamento:**
@@ -111,4 +111,4 @@ Em contraste, quando o jogador recebe uma carta de voltar casas, ele caminha pel
 *Legenda: [S17] Encerramento da partida: tela de fim de jogo com o relatório completo — classificação por patrimônio, estatísticas e histórico final.*
 
 ---
-*Nota ao avaliador: As funcionalidades bônus [S18 a S21] não foram documentadas pois a equipe focou 100% da engenharia na precisão mecânica, estabilidade e aderência total aos requisitos obrigatórios estabelecidos.*
+*Nota ao avaliador: As funcionalidades bônus [S18 a S21] não foram documentadas pois o foco foi mantido 100% na precisão mecânica, estabilidade e aderência total aos requisitos obrigatórios estabelecidos pela especificação.*

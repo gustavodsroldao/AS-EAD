@@ -75,8 +75,7 @@ public class Tabuleiro {
     }
 
     /**
-     * Exibe todas as casas em ordem, evidenciando a estrutura circular
-     * com a nota no final (exigida pelo screenshot S5).
+     * Exibe todas as casas em ordem, evidenciando a estrutura circular.
      */
     public void exibir() {
         if (inicio == null) {

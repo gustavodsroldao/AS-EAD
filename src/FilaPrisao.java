@@ -6,7 +6,7 @@
  * máximo de jogadores (6), pois todos podem ser presos simultaneamente.
  *
  * O método posicao() permite exibir ao jogador sua posição na fila
- * de espera assim que é enviado à prisão (screenshot S7).
+ * de espera assim que é enviado à prisão.
  *
  * Implementação por array circular com ponteiros 'head' e 'tail'.
  * Nenhuma classe de java.util.Queue ou equivalente é utilizada.
