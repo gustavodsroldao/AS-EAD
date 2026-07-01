@@ -14,13 +14,13 @@
  */
 public class Tabuleiro {
 
-    private Casa inicio;  // primeiro nó (casa INICIO)
-    private Casa fim;     // último nó inserido
-    private int  tamanho;
+    private Casa inicio; // primeiro nó (casa INICIO)
+    private Casa fim; // último nó inserido
+    private int tamanho;
 
     public Tabuleiro() {
-        this.inicio  = null;
-        this.fim     = null;
+        this.inicio = null;
+        this.fim = null;
         this.tamanho = 0;
     }
 
@@ -34,15 +34,15 @@ public class Tabuleiro {
 
         if (inicio == null) {
             // Primeiro nó: aponta para si mesmo em ambas as direções.
-            inicio        = casa;
-            fim           = casa;
-            casa.proximo  = casa;
+            inicio = casa;
+            fim = casa;
+            casa.proximo = casa;
             casa.anterior = casa;
         } else {
             // Encaixa o novo nó entre 'fim' e 'inicio', preservando o anel.
-            casa.proximo    = inicio;
-            casa.anterior   = fim;
-            fim.proximo     = casa;
+            casa.proximo = inicio;
+            casa.anterior = fim;
+            fim.proximo = casa;
             inicio.anterior = casa;
             fim = casa;
         }
@@ -91,6 +91,11 @@ public class Tabuleiro {
         System.out.println("  ^ Casa " + tamanho + " aponta de volta para Casa 1 [CIRCULAR] ^");
     }
 
-    public Casa getInicio()  { return inicio;  }
-    public int  getTamanho() { return tamanho; }
+    public Casa getInicio() {
+        return inicio;
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
 }

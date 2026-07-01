@@ -10,20 +10,20 @@
  * 'maiorAluguelCobrado' é usado no relatório final para estatísticas.
  */
 public class Imovel {
-    public String  nome;
-    public double  valorCompra;
-    public double  aluguelBase;
+    public String nome;
+    public double valorCompra;
+    public double aluguelBase;
     public Jogador dono;
-    public double  multiplicadorDemanda;
-    public double  maiorAluguelCobrado;
+    public double multiplicadorDemanda;
+    public double maiorAluguelCobrado;
 
     public Imovel(String nome, double valorCompra, double aluguelBase) {
-        this.nome                = nome;
-        this.valorCompra         = valorCompra;
-        this.aluguelBase         = aluguelBase;
-        this.dono                = null;
+        this.nome = nome;
+        this.valorCompra = valorCompra;
+        this.aluguelBase = aluguelBase;
+        this.dono = null;
         this.multiplicadorDemanda = 1.0;
-        this.maiorAluguelCobrado  = 0.0;
+        this.maiorAluguelCobrado = 0.0;
     }
 
     /** Aluguel real = base × multiplicador de demanda. */
@@ -35,12 +35,14 @@ public class Imovel {
     public void incrementarDemanda() {
         if (multiplicadorDemanda < 2.0) {
             multiplicadorDemanda += 0.1;
-            if (multiplicadorDemanda > 2.0) multiplicadorDemanda = 2.0;
+            if (multiplicadorDemanda > 2.0)
+                multiplicadorDemanda = 2.0;
         }
     }
 
     public void registrarAluguelCobrado(double valor) {
-        if (valor > maiorAluguelCobrado) maiorAluguelCobrado = valor;
+        if (valor > maiorAluguelCobrado)
+            maiorAluguelCobrado = valor;
     }
 
     @Override

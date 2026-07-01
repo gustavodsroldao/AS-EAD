@@ -10,12 +10,12 @@ import java.util.Scanner;
  * a gestão da prisão (FilaPrisao — fila FIFO).
  *
  * Fluxo de um turno normal:
- *   1. Verifica se o jogador está preso → processarTurnoPrisao()
- *   2. Lança dois dados e avança no Tabuleiro
- *   3. Detecta passagens pelo INICIO e paga salário (sem pagar em retrocessos)
- *   4. Aplica o efeito da casa de destino
- *   5. Verifica falência
- *   6. Registra o turno no histórico
+ * 1. Verifica se o jogador está preso → processarTurnoPrisao()
+ * 2. Lança dois dados e avança no Tabuleiro
+ * 3. Detecta passagens pelo INICIO e paga salário (sem pagar em retrocessos)
+ * 4. Aplica o efeito da casa de destino
+ * 5. Verifica falência
+ * 6. Registra o turno no histórico
  */
 public class Jogo {
     private Tabuleiro tabuleiro;
@@ -31,7 +31,7 @@ public class Jogo {
     private FilaHistorico historico;
     private FilaPrisao filaPrisao;
     private Casa casaPrisao;
-    private String efeitoTurno;
+    private String efeitoTurno = "";
 
     public Jogo(Jogador[] jogadores, int qtdJogadores,
             Imovel[] imoveis, int qtdImoveis,
@@ -236,6 +236,7 @@ public class Jogo {
         historico.enfileirar(new FilaHistorico.Registro(
                 rodadaAtual, jogador.nome,
                 dados[0] + "+" + dados[1] + "=" + total,
+                String.format("[%d]%s", novaPosicao.numero, novaPosicao),
                 efeitoTurno));
     }
 
@@ -256,7 +257,8 @@ public class Jogo {
             System.out.printf("  Dados (saida obrigatoria): %d + %d = %d%n",
                     dados[0], dados[1], dados[0] + dados[1]);
         } else {
-            double custoFianca = ("ADVOGADO".equals(jogador.personagem) && !jogador.isencaoAdvogadoUsada) ? 0 : config.fianca;
+            double custoFianca = ("ADVOGADO".equals(jogador.personagem) && !jogador.isencaoAdvogadoUsada) ? 0
+                    : config.fianca;
             System.out.println("  [1] Tentar sair com dados duplos");
             if ("ADVOGADO".equals(jogador.personagem) && !jogador.isencaoAdvogadoUsada) {
                 System.out.println("  [2] Sair (ADVOGADO - isencao de fianca disponivel)");
@@ -271,7 +273,8 @@ public class Jogo {
                     jogador.saldo -= custoFianca;
                     if ("ADVOGADO".equals(jogador.personagem) && !jogador.isencaoAdvogadoUsada && custoFianca == 0) {
                         jogador.isencaoAdvogadoUsada = true;
-                        System.out.println("  [Habilidade ADVOGADO] Saiu da prisao usando sua unica isencao de fianca!");
+                        System.out
+                                .println("  [Habilidade ADVOGADO] Saiu da prisao usando sua unica isencao de fianca!");
                     } else {
                         System.out.printf("  Pagou fianca: R$ %.2f. Saldo: R$ %.2f%n",
                                 custoFianca, jogador.saldo);
@@ -327,8 +330,9 @@ public class Jogo {
         }
 
         String dadosStr = dados != null ? dados[0] + "+" + dados[1] : "-";
+        String destinoStr = String.format("[%d]%s", jogador.posicaoAtual.numero, jogador.posicaoAtual);
         historico.enfileirar(new FilaHistorico.Registro(
-                rodadaAtual, jogador.nome, dadosStr, efeitoTurno));
+                rodadaAtual, jogador.nome, dadosStr, destinoStr, efeitoTurno));
     }
 
     private void enviarParaPrisao(Jogador jogador) {
@@ -599,10 +603,13 @@ public class Jogo {
                 break;
 
             case Carta.VOLTAR_CASAS:
+                int passouInicio = contarPassagensPeloInicioRetrocedendo(jogador.posicaoAtual, carta.casas);
                 jogador.posicaoAtual = tabuleiro.retroceder(jogador.posicaoAtual, carta.casas);
                 System.out.printf("  Retrocedeu %d casas -> [%2d] %s%n",
                         carta.casas, jogador.posicaoAtual.numero, jogador.posicaoAtual);
-                System.out.println("  [Retrocesso nao gera salario ao cruzar INICIO]");
+                if (passouInicio > 0) {
+                    System.out.println("  [Cruzou o INICIO retrocedendo - salario NAO concedido!]");
+                }
                 efeitoTurno = "Carta: retrocedeu " + carta.casas + " casas";
                 aplicarEfeitoCasa(jogador, true);
                 break;
@@ -741,6 +748,17 @@ public class Jogo {
         int count = 0;
         for (int i = 0; i < passos; i++) {
             pos = pos.proximo;
+            if ("INICIO".equals(pos.tipo))
+                count++;
+        }
+        return count;
+    }
+
+    private int contarPassagensPeloInicioRetrocedendo(Casa posicaoAtual, int passos) {
+        Casa pos = posicaoAtual;
+        int count = 0;
+        for (int i = 0; i < passos; i++) {
+            pos = pos.anterior;
             if ("INICIO".equals(pos.tipo))
                 count++;
         }

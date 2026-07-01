@@ -14,28 +14,39 @@
 public class FilaPrisao {
 
     private Jogador[] fila;
-    private int       head;
-    private int       tail;
-    private int       tamanho;
-    private int       capacidade;
+    private int head;
+    private int tail;
+    private int tamanho;
+    private int capacidade;
 
     public FilaPrisao(int capacidade) {
         this.capacidade = capacidade;
-        this.fila       = new Jogador[capacidade];
-        this.head       = 0;
-        this.tail       = 0;
-        this.tamanho    = 0;
+        this.fila = new Jogador[capacidade];
+        this.head = 0;
+        this.tail = 0;
+        this.tamanho = 0;
     }
 
-    public boolean isEmpty()     { return tamanho == 0;          }
-    public boolean isFull()      { return tamanho == capacidade; }
-    public int     getTamanho()  { return tamanho;               }
+    public boolean isEmpty() {
+        return tamanho == 0;
+    }
 
-    /** Enfileira o jogador se a fila não estiver cheia e ele ainda não estiver nela. */
+    public boolean isFull() {
+        return tamanho == capacidade;
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    /**
+     * Enfileira o jogador se a fila não estiver cheia e ele ainda não estiver nela.
+     */
     public void enfileirar(Jogador j) {
-        if (isFull() || contem(j)) return;
+        if (isFull() || contem(j))
+            return;
         fila[tail] = j;
-        tail       = (tail + 1) % capacidade;
+        tail = (tail + 1) % capacidade;
         tamanho++;
     }
 
@@ -45,17 +56,19 @@ public class FilaPrisao {
      * Reconstrói o array preservando a ordem dos demais.
      */
     public void remover(Jogador j) {
-        if (isEmpty()) return;
-        Jogador[] novo     = new Jogador[capacidade];
-        int       novoTail = 0;
-        int       idx      = head;
+        if (isEmpty())
+            return;
+        Jogador[] novo = new Jogador[capacidade];
+        int novoTail = 0;
+        int idx = head;
         for (int i = 0; i < tamanho; i++) {
-            if (fila[idx] != j) novo[novoTail++] = fila[idx];
+            if (fila[idx] != j)
+                novo[novoTail++] = fila[idx];
             idx = (idx + 1) % capacidade;
         }
-        fila    = novo;
-        head    = 0;
-        tail    = novoTail;
+        fila = novo;
+        head = 0;
+        tail = novoTail;
         tamanho = novoTail;
     }
 
@@ -63,7 +76,8 @@ public class FilaPrisao {
     public boolean contem(Jogador j) {
         int idx = head;
         for (int i = 0; i < tamanho; i++) {
-            if (fila[idx] == j) return true;
+            if (fila[idx] == j)
+                return true;
             idx = (idx + 1) % capacidade;
         }
         return false;
@@ -73,7 +87,8 @@ public class FilaPrisao {
     public int posicao(Jogador j) {
         int idx = head;
         for (int i = 0; i < tamanho; i++) {
-            if (fila[idx] == j) return i + 1;
+            if (fila[idx] == j)
+                return i + 1;
             idx = (idx + 1) % capacidade;
         }
         return -1;

@@ -18,51 +18,57 @@ public class FilaHistorico {
 
     /** Um registro imutável de turno no histórico. */
     public static class Registro {
-        public int    rodada;
+        public int rodada;
         public String jogador;
         public String dados;
+        public String destino;
         public String efeito;
 
-        public Registro(int rodada, String jogador, String dados, String efeito) {
-            this.rodada  = rodada;
-            this.jogador = jogador;
-            this.dados   = dados;
-            this.efeito  = efeito;
+        public Registro(int rodada, String jogador, String dados, String destino, String efeito) {
+            this.rodada = rodada;
+            this.jogador = jogador != null ? jogador : "";
+            this.dados = dados != null ? dados : "";
+            this.destino = destino != null ? destino : "";
+            this.efeito = efeito != null ? efeito : "";
         }
 
         @Override
         public String toString() {
-            return String.format("Rd %3d | %-14s | Dados: %-8s | %s",
-                    rodada, jogador, dados, efeito);
+            String dest = destino.length() > 22 ? destino.substring(0, 22) : destino;
+            return String.format("Rd %3d | %-14s | Dados: %-8s | %-22s | %s",
+                    rodada, jogador, dados, dest, efeito);
         }
     }
 
     private Registro[] fila;
-    private int        head;       // índice do elemento mais antigo
-    private int        tail;       // índice onde o próximo será inserido
-    private int        tamanho;
-    private int        capacidade;
+    private int head; // índice do elemento mais antigo
+    private int tail; // índice onde o próximo será inserido
+    private int tamanho;
+    private int capacidade;
 
     public FilaHistorico(int capacidade) {
         this.capacidade = capacidade;
-        this.fila       = new Registro[capacidade];
-        this.head       = 0;
-        this.tail       = 0;
-        this.tamanho    = 0;
+        this.fila = new Registro[capacidade];
+        this.head = 0;
+        this.tail = 0;
+        this.tamanho = 0;
     }
 
     /**
      * Enfileira um registro. Se a fila estiver cheia, descarta o mais
      * antigo avançando 'head' — comportamento de buffer circular.
+     * Registros nulos ou sem jogador são ignorados.
      */
     public void enfileirar(Registro r) {
+        if (r == null || r.jogador.isEmpty())
+            return;
         if (tamanho == capacidade) {
             // Descarta o registro mais antigo para abrir espaço.
-            head    = (head + 1) % capacidade;
+            head = (head + 1) % capacidade;
             tamanho--;
         }
         fila[tail] = r;
-        tail       = (tail + 1) % capacidade;
+        tail = (tail + 1) % capacidade;
         tamanho++;
     }
 
@@ -81,6 +87,11 @@ public class FilaHistorico {
         }
     }
 
-    public int getTamanho()    { return tamanho;    }
-    public int getCapacidade() { return capacidade; }
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public int getCapacidade() {
+        return capacidade;
+    }
 }

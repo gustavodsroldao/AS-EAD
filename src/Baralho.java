@@ -17,18 +17,26 @@
 public class Baralho {
 
     private Carta[] cartas;
-    private int     tamanho;
-    private int     capacidade;
+    private int tamanho;
+    private int capacidade;
 
     public Baralho(int capacidade) {
-        this.cartas     = new Carta[capacidade];
-        this.tamanho    = 0;
+        this.cartas = new Carta[capacidade];
+        this.tamanho = 0;
         this.capacidade = capacidade;
     }
 
-    public boolean isEmpty() { return tamanho == 0;           }
-    public boolean isFull()  { return tamanho == capacidade;  }
-    public int     tamanho() { return tamanho;                }
+    public boolean isEmpty() {
+        return tamanho == 0;
+    }
+
+    public boolean isFull() {
+        return tamanho == capacidade;
+    }
+
+    public int tamanho() {
+        return tamanho;
+    }
 
     /** Push: insere carta no topo da pilha (índice tamanho). */
     public void empilhar(Carta c) {
@@ -54,7 +62,8 @@ public class Baralho {
 
     /** Peek: consulta o topo sem remover. */
     public Carta espiar() {
-        if (!isEmpty()) return cartas[tamanho - 1];
+        if (!isEmpty())
+            return cartas[tamanho - 1];
         return null;
     }
 
@@ -62,16 +71,17 @@ public class Baralho {
     public void embaralhar() {
         java.util.Random rand = new java.util.Random();
         for (int i = tamanho - 1; i > 0; i--) {
-            int   j    = rand.nextInt(i + 1);
+            int j = rand.nextInt(i + 1);
             Carta temp = cartas[i];
-            cartas[i]  = cartas[j];
-            cartas[j]  = temp;
+            cartas[i] = cartas[j];
+            cartas[j] = temp;
         }
     }
 
     /** Esvazia a pilha para permitir remontagem do baralho. */
     public void limpar() {
-        for (int i = 0; i < tamanho; i++) cartas[i] = null;
+        for (int i = 0; i < tamanho; i++)
+            cartas[i] = null;
         tamanho = 0;
     }
 }
